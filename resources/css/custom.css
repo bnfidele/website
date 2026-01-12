@@ -1,0 +1,178 @@
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glassmorphism {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        /* Product card styles */
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .dark .product-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            transition: transform 0.5s ease-out;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .order-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .order-button:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Animations de compteur améliorées */
+        .counter-container {
+            perspective: 1000px;
+        }
+        
+        .counter-number {
+            display: inline-block;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            font-variant-numeric: tabular-nums;
+            position: relative;
+        }
+        
+        .counter-number.animate {
+            animation: counterPulse 0.8s ease-out;
+        }
+        
+        .counter-animation {
+            animation: countUp 2s ease-out;
+            transform-origin: center;
+        }
+        
+        @keyframes countUp {
+            0% {
+                transform: scale(0.3) rotateY(180deg);
+                opacity: 0;
+                filter: blur(4px);
+            }
+            50% {
+                transform: scale(1.1) rotateY(90deg);
+                opacity: 0.7;
+                filter: blur(2px);
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+                filter: blur(0px);
+            }
+        }
+        
+        @keyframes counterPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .counter-text {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Animation de brillance pour les compteurs */
+        .counter-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .counter-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.8s ease-in-out;
+        }
+        
+        .counter-shine.active::before {
+            left: 100%;
+        }
+        
+        /* Effet de particules pour les gros nombres */
+        .counter-particles {
+            position: relative;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 2s ease-out forwards;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(var(--particle-x, 20px), var(--particle-y, -30px)) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--particle-x, 20px) * 2), calc(var(--particle-y, -30px) * 2)) scale(0.5);
+            }
+        }
+        
+        .pagination-dot {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pagination-dot.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .carousel-scroll {
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .carousel-scroll:hover {
+            animation-play-state: paused;
+        }
+ 
