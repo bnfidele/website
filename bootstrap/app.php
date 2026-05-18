@@ -55,7 +55,17 @@ $app->singleton(
 |
 */
 
-// Configurer le dossier de cache pour le mode Serverless (Vercel)
-$app->useStoragePath(env('APP_STORAGE_PATH', '/tmp/storage'));
+/*
+|--------------------------------------------------------------------------
+| Configuration pour l'environnement Serverless (Vercel)
+|--------------------------------------------------------------------------
+*/
+if (env('APP_ENV') === 'production') {
+    // Redirige le stockage global (sessions, vues compilées) vers /tmp
+    $app->useStoragePath('/tmp/storage');
+
+    // Redirige spécifiquement le chemin du cache d'amorçage
+    $app->setBootstrapCachePath('/tmp/storage/bootstrap/cache');
+}
 
 return $app;

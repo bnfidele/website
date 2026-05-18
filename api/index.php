@@ -1,6 +1,6 @@
 <?php
 
-// Création automatique des dossiers requis dans la zone temporaire de Vercel
+// 1. Création dynamique de l'arborescence dans l'espace temporaire inscriptible
 $storageFolders = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/data',
@@ -14,5 +14,5 @@ foreach ($storageFolders as $folder) {
     }
 }
 
-// Redirection vers le dossier public de Laravel 10
+// 2. Inclure l'application Laravel classique
 require __DIR__ . '/../public/index.php';
