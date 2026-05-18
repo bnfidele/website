@@ -46,6 +46,16 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
+| Configuration pour l'environnement Serverless (Vercel)
+|--------------------------------------------------------------------------
+*/
+if (env('APP_ENV') === 'production') {
+    // On garde uniquement la redirection du stockage standard (sessions, views)
+    $app->useStoragePath('/tmp/storage');
+}
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |
@@ -54,18 +64,5 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
-
-/*
-|--------------------------------------------------------------------------
-| Configuration pour l'environnement Serverless (Vercel)
-|--------------------------------------------------------------------------
-*/
-if (env('APP_ENV') === 'production') {
-    // Redirige le stockage global (sessions, vues compilées) vers /tmp
-    $app->useStoragePath('/tmp/storage');
-
-    // Redirige spécifiquement le chemin du cache d'amorçage
-    $app->setBootstrapCachePath('/tmp/storage/bootstrap/cache');
-}
 
 return $app;
