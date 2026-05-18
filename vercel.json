@@ -3,17 +3,23 @@
   "outputDirectory": "public",
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.7.1"
+      "runtime": "vercel-php@0.7.1",
+      "memory": 3008,
+      "maxDuration": 30
     }
   },
   "env": {
-    "LARAVEL_STORAGE_PATH": "/tmp/storage",
-    "LARAVEL_BOOTSTRAP_CACHE_PATH": "/tmp/bootstrap/cache"
+    "APP_BOOTSTRAP_CACHE_PATH": "/tmp/storage/bootstrap/cache",
+    "APP_STORAGE_PATH": "/tmp/storage"
   },
   "build": {
+    "commands": [
+      "mkdir -p /tmp/storage/bootstrap/cache /tmp/storage/framework/views /tmp/storage/framework/sessions /tmp/storage/logs",
+      "chmod -R 777 /tmp/storage || true"
+    ],
     "env": {
-      "LARAVEL_STORAGE_PATH": "/tmp/storage",
-      "LARAVEL_BOOTSTRAP_CACHE_PATH": "/tmp/bootstrap/cache"
+      "APP_BOOTSTRAP_CACHE_PATH": "/tmp/storage/bootstrap/cache",
+      "APP_STORAGE_PATH": "/tmp/storage"
     }
   },
   "routes": [

@@ -49,9 +49,17 @@ $app->singleton(
 | Configuration pour l'environnement Serverless (Vercel)
 |--------------------------------------------------------------------------
 */
-if (env('APP_ENV') === 'production') {
-    // On garde uniquement la redirection du stockage standard (sessions, views)
-    $app->useStoragePath('/tmp/storage');
+if (env('APP_ENV') === 'production' || getenv('VERCEL')) {
+    // Utiliser /tmp pour le stockage et le cache en production/Vercel
+    $storagePath = '/tmp/storage';
+    $cachePath = '/tmp/storage/bootstrap/cache';
+    
+    // Créer les répertoires s'ils n'existent pas
+    @mkdir($storagePath, 0777, true);
+    @mkdir($cachePath, 0777, true);
+    
+    $app->useStoragePath($storagePath);
+    $app->useCachePath($cachePath);
 }
 
 /*

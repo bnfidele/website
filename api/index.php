@@ -10,16 +10,21 @@ $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 $_ENV['LOG_CHANNEL'] = 'stderr';
 
 // 2. Assurer la présence des dossiers temporaires
+$basePath = __DIR__ . '/..';
 $storageFolders = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/data',
     '/tmp/storage/framework/sessions',
     '/tmp/storage/bootstrap/cache',
+    $basePath . '/bootstrap/cache',
+    $basePath . '/storage/framework',
+    $basePath . '/storage/logs',
 ];
 
 foreach ($storageFolders as $folder) {
     if (!is_dir($folder)) {
-        mkdir($folder, 0755, true);
+        @mkdir($folder, 0777, true);
+        @chmod($folder, 0777);
     }
 }
 
