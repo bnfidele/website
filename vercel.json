@@ -6,6 +6,16 @@
       "runtime": "vercel-php@0.7.1"
     }
   },
+  "env": {
+    "LARAVEL_STORAGE_PATH": "/tmp/storage",
+    "LARAVEL_BOOTSTRAP_CACHE_PATH": "/tmp/bootstrap/cache"
+  },
+  "build": {
+    "env": {
+      "LARAVEL_STORAGE_PATH": "/tmp/storage",
+      "LARAVEL_BOOTSTRAP_CACHE_PATH": "/tmp/bootstrap/cache"
+    }
+  },
   "routes": [
     {
       "src": "/build/(.*)",
