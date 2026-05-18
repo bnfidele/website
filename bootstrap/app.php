@@ -1,5 +1,22 @@
 <?php
 
+// Créer immédiatement les répertoires requises par Laravel
+$basePath = dirname(__DIR__);
+$requiredDirs = [
+    $basePath . '/bootstrap/cache',
+    $basePath . '/storage',
+    $basePath . '/storage/app',
+    $basePath . '/storage/framework',
+    $basePath . '/storage/logs',
+];
+
+foreach ($requiredDirs as $dir) {
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0777, true);
+    }
+    @chmod($dir, 0777);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

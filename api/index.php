@@ -17,6 +17,8 @@ $storageFolders = [
     '/tmp/storage/framework/sessions',
     '/tmp/storage/bootstrap/cache',
     $basePath . '/bootstrap/cache',
+    $basePath . '/storage',
+    $basePath . '/storage/app',
     $basePath . '/storage/framework',
     $basePath . '/storage/logs',
 ];
@@ -24,8 +26,8 @@ $storageFolders = [
 foreach ($storageFolders as $folder) {
     if (!is_dir($folder)) {
         @mkdir($folder, 0777, true);
-        @chmod($folder, 0777);
     }
+    @chmod($folder, 0777);
 }
 
 // 3. Bloc de capture de l'erreur masquée
