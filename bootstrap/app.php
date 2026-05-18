@@ -55,4 +55,7 @@ $app->singleton(
 |
 */
 
+// Configurer le dossier de cache pour le mode Serverless (Vercel)
+$app->useStoragePath(env('APP_STORAGE_PATH', '/tmp/storage'));
+
 return $app;
