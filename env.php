@@ -9,10 +9,10 @@ LOG_DEPRECATIONS_CHANNEL=null
 LOG_LEVEL=debug
 
 DB_CONNECTION=mysql
-DB_HOST=mysql-flamx.alwaysdata.net
+DB_HOST=mysql-bauma.alwaysdata.net
 DB_PORT=3306
-DB_DATABASE=flamx_flamx
-DB_USERNAME=flamx
+DB_DATABASE=bauma_web
+DB_USERNAME=bauma
 DB_PASSWORD=8044008089079085
 
 BROADCAST_DRIVER=log
