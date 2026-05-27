@@ -3,29 +3,55 @@
 /*
 
 |--------------------------------------------------------------------------
-| Create The Application
+| Définition d'une Application surchargée pour le Serverless (Vercel)
 |--------------------------------------------------------------------------
 */
 
-$isVercel = env('APP_ENV') === 'production' || getenv('VERCEL');
+class VercelServerlessApplication extends Illuminate\Foundation\Application
+{
+    // Surcharger le chemin du dossier bootstrap
+    public function bootstrapPath($path = '')
+    {
+        $isVercel = env('APP_ENV') === 'production' || getenv('VERCEL');
+        $base = $isVercel ? '/tmp/bootstrap' : $this->basePath.DIRECTORY_SEPARATOR.'bootstrap';
+        
+        return $base.($path ? DIRECTORY_SEPARATOR.$path : '');
+    }
 
-if ($isVercel) {
-    // Force Laravel à utiliser /tmp pour l'écriture des manifests de packages
-    $_ENV['APP_BASE_PATH'] = '/tmp';
-    
-    // Crée les dossiers requis dans le seul espace accessible en écriture
-    @mkdir('/tmp/bootstrap/cache', 0777, true);
-    @mkdir('/tmp/storage/framework/views', 0777, true);
+    // Surcharger le chemin du dossier storage
+    public function storagePath($path = '')
+    {
+        $isVercel = env('APP_ENV') === 'production' || getenv('VERCEL');
+        $base = $isVercel ? '/tmp/storage' : ($this->storagePath ?: $this->basePath.DIRECTORY_SEPARATOR.'storage');
+        
+        return $base.($path ? DIRECTORY_SEPARATOR.$path : '');
+    }
 }
 
-$app = new Illuminate\Foundation\Application(
+/*
+
+|--------------------------------------------------------------------------
+| Initialisation de l'Application
+|--------------------------------------------------------------------------
+*/
+
+if (env('APP_ENV') === 'production' || getenv('VERCEL')) {
+    // Initialiser les répertoires temporaires en écriture sur Vercel
+    @mkdir('/tmp/bootstrap/cache', 0777, true);
+    @mkdir('/tmp/storage/framework/views', 0777, true);
+    @mkdir('/tmp/storage/framework/cache', 0777, true);
+    @mkdir('/tmp/storage/framework/sessions', 0777, true);
+}
+
+// Instanciation de notre classe personnalisée au lieu de la classe par défaut
+$app = new VercelServerlessApplication(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
 /*
 
 |--------------------------------------------------------------------------
-| Bind Important Interfaces
+| Enregistrement des Kernels
 |--------------------------------------------------------------------------
 */
 
@@ -45,21 +71,5 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
-
-/*
-
-|--------------------------------------------------------------------------
-| Configuration pour l'environnement Serverless (Vercel)
-|--------------------------------------------------------------------------
-*/
-if ($isVercel) {
-    // Redirige le stockage classique (logs, sessions) vers /tmp
-    $app->useStoragePath('/tmp/storage');
-
-    // Redirige le chemin bootstrap vers /tmp pour contourner le blocage du cache
-    $app->bind('path.bootstrap', function () {
-        return '/tmp/bootstrap';
-    });
-}
 
 return $app;
