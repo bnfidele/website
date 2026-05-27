@@ -7,15 +7,13 @@
 |--------------------------------------------------------------------------
 */
 
-// Détection de l'environnement Vercel
 $isVercel = env('APP_ENV') === 'production' || getenv('VERCEL');
 
-// Si nous sommes sur Vercel, on force Laravel à croire que sa racine est /tmp
-// pour l'écriture des manifests de packages (PackageManifest)
 if ($isVercel) {
+    // Force Laravel à utiliser /tmp pour l'écriture des manifests de packages
     $_ENV['APP_BASE_PATH'] = '/tmp';
     
-    // Création des dossiers requis uniquement dans /tmp
+    // Crée les dossiers requis dans le seul espace accessible en écriture
     @mkdir('/tmp/bootstrap/cache', 0777, true);
     @mkdir('/tmp/storage/framework/views', 0777, true);
 }
@@ -58,7 +56,7 @@ if ($isVercel) {
     // Redirige le stockage classique (logs, sessions) vers /tmp
     $app->useStoragePath('/tmp/storage');
 
-    // Solution pour injecter le nouveau chemin bootstrap/cache
+    // Redirige le chemin bootstrap vers /tmp pour contourner le blocage du cache
     $app->bind('path.bootstrap', function () {
         return '/tmp/bootstrap';
     });
