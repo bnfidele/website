@@ -11,7 +11,7 @@ LOG_LEVEL=debug
 DB_CONNECTION=mysql
 DB_HOST=mysql-bauma.alwaysdata.net
 DB_PORT=3306
-DB_DATABASE=bauma_web
+DB_DATABASE=bauma_flamx
 DB_USERNAME=bauma
 DB_PASSWORD=8044008089079085
 
@@ -57,3 +57,8 @@ VITE_PUSHER_HOST="${PUSHER_HOST}"
 VITE_PUSHER_PORT="${PUSHER_PORT}"
 VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
 VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+# Vercel Serverless Configuration
+APP_BOOTSTRAP_CACHE_PATH=/tmp/storage/bootstrap/cache
+APP_STORAGE_PATH=/tmp/storage
+VIEW_COMPILED_PATH=/tmp/storage/framework/views
